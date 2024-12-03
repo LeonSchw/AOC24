@@ -9,6 +9,11 @@ import kotlin.io.path.readText
 fun readInput(name: String) = Path("src/$name.txt").readText().trim().lines()
 
 /**
+ * Parses integer list from given string, where numbers are separated by given delimiter.
+ */
+fun parseIntList (input : String, delimiter : String = " ") =  input.split(delimiter).map { it.toInt() }.toList()
+
+/**
  * Converts string to md5 hash.
  */
 fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray()))
