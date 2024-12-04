@@ -132,15 +132,21 @@ fun main() {
             if (isBad1 && !saveToRemove) {
                 return false
             }
+            if ((isBad2 || isBad1) && seenOneBad)
+                return false
             if (saveToRemove && isBad1){
                 val modInput = input.toMutableList()
                 modInput.removeAt(1)
                 return checkDecreasing(modInput, true)
             }
             if (saveToRemove && isBad2){
-                val modInput = input.toMutableList()
+                var modInput = input.toMutableList()
+                modInput.removeAt(1)
+                val first : Boolean = checkDecreasing(modInput, true)
+                modInput = input.toMutableList()
                 modInput.removeAt(2)
-                return checkDecreasing(modInput, true)
+                val second : Boolean = checkDecreasing(modInput, true)
+                return first || second
             }
             return checkDecreasing(input.subList(1, input.size), seenOneBad)
         }
@@ -163,15 +169,21 @@ fun main() {
             if (isBad1 && !saveToRemove) {
                 return false
             }
+            if ((isBad2 || isBad1) && seenOneBad)
+                return false
             if (saveToRemove && isBad1){
                 val modInput = input.toMutableList()
                 modInput.removeAt(1)
                 return checkIncreasing(modInput, true)
             }
             if (saveToRemove && isBad2) {
-                val modInput = input.toMutableList()
+                var modInput = input.toMutableList()
+                modInput.removeAt(1)
+                val first : Boolean = checkIncreasing(modInput, true)
+                modInput = input.toMutableList()
                 modInput.removeAt(2)
-                return checkIncreasing(modInput, true)
+                val second : Boolean = checkIncreasing(modInput, true)
+                return first || second
             }
             return checkIncreasing(input.subList(1, input.size), seenOneBad)
         }
@@ -179,31 +191,31 @@ fun main() {
         var count = 0
         for (line in input) {
             val ints : List<Int> = parseIntList(line)
-            if (ints[0] < ints[1]) {
+            if (ints[0] < ints[1] && ints[1] - ints[0] <=3) {
                 if (checkIncreasing(ints.toMutableList()))
                     count += 1
             }
-            else if (ints[0] < ints[2]) {
+            else if (ints[0] < ints[2] && ints[2] - ints[0] <=3) {
                 val modInts = ints.toMutableList()
                 modInts.removeAt(1)
                 if (checkIncreasing(modInts, true))
                     count += 1
             }
-            else if (ints[1] < ints[2]) {
+            else if (ints[1] < ints[2] && ints[2] - ints[1] <=3) {
                 if (checkIncreasing(ints.subList(1, ints.size).toMutableList(), true))
                     count += 1
             }
-            if (ints[0] > ints[1]) {
+            if (ints[0] > ints[1] && ints[0] - ints[1] <=3) {
                 if (checkDecreasing(ints.toMutableList()))
                     count += 1
             }
-            else if (ints[0] > ints[2]) {
+            else if (ints[0] > ints[2] && ints[0] - ints[2] <=3) {
                 val modInts = ints.toMutableList()
                 modInts.removeAt(1)
                 if (checkDecreasing(modInts, true))
                     count += 1
             }
-            else if (ints[1] > ints[2]) {
+            else if (ints[1] > ints[2] && ints[1] - ints[2] <=3) {
                 if (checkDecreasing(ints.subList(1, ints.size).toMutableList(), true))
                     count += 1
             }
@@ -214,6 +226,7 @@ fun main() {
     val testInput = readInput("inputs/Day02_test")
     check(part1(testInput) == 2)
     check(part2New(testInput) == 7)
+    check(part2New(readInput("inputs/Day02_test2")) == 21)
 
     val input = readInput("inputs/Day02")
     part1(input).println()
