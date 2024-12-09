@@ -14,6 +14,11 @@ fun readInput(name: String) = Path("src/$name.txt").readText().trim().lines()
 fun parseIntList (input : String, delimiter : String = " ") =  input.split(delimiter).map { it.toInt() }.toList()
 
 /**
+ * Parses integer list from given string, where numbers are separated by given delimiter.
+ */
+fun parseLongList (input : String, delimiter : String = " ") =  input.split(delimiter).map { it.toLong() }.toList()
+
+/**
  * Converts string to md5 hash.
  */
 fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray()))
