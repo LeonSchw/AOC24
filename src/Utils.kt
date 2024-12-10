@@ -18,6 +18,18 @@ fun parseIntList (input : String, delimiter : String = " ") =  input.split(delim
  */
 fun parseLongList (input : String, delimiter : String = " ") =  input.split(delimiter).map { it.toLong() }.toList()
 
+fun setCharAtIndex (line : String, char: Char, index : Int) : String {
+    val output = buildString {
+        for (idx in line.indices) {
+            if (idx == index)
+                append(char)
+            else
+                append(line[idx])
+        }
+    }
+    return output
+}
+
 /**
  * Converts string to md5 hash.
  */
